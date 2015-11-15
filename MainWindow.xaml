@@ -1,0 +1,25 @@
+﻿<Window x:Class="rot13.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:rot13"
+        mc:Ignorable="d"
+        Title="ROT13" Height="180" Width="247">
+    <Window.Resources>
+        <local:Rot13Encoder x:Key="r13"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource r13}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="rot13String" TextWrapping="Wrap" 
+                 Text="{Binding Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                 Grid.Row="0" Margin="10,10,10,0" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Center">
+        <Button Content="Encode" Width="75" Command="{Binding Path=Encode}" Margin="10"/>
+        <Button Content="PasteRot13"  Width="75" Command="{Binding PasteRot13}" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</Window>
