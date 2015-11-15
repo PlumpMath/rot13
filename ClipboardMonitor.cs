@@ -27,7 +27,8 @@ namespace rot13
                                     // and in fact don't even show it.
                 }
             );
-            // Register this hwnd to get notifications about the clipboard
+            // Register this hwnd to get notifications about the clipboard.
+            // Method returns the next entity in the clipboard notification chain
             nextViewer = NativeMethods.SetClipboardViewer(source.Handle);
         }
 
