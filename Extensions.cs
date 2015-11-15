@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace rot13
 {
@@ -38,9 +36,9 @@ namespace rot13
                     char c1;
                     return subs.TryGetValue(c, out c1) ? c1 : c;
                 })
-                .ToArray() // would be nicer as an extension method but
-                           // Append(object) already exists so extensions
-                           // are never called :-(
+                .ToArray() // would be nicer to have Stringbuilder.Append(IEnumerable<char>)
+                           // as an extension method but Append(object) already exists so 
+                           // extension methods are never called :-(
             );
             return sb.ToString();
         }

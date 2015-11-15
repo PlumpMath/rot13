@@ -60,6 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ClipboardMonitor.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="NotifiableObject.cs" />
     <Compile Include="Rot13Encoder.cs" />
     <Page Include="MainWindow.xaml">

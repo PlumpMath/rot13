@@ -4,42 +4,70 @@ using System.Windows.Input;
 
 namespace rot13
 {
+    /// <summary>
+    /// Implements ICommand. Based tosome extent on the Prism DelegateCommand class but without
+    /// quite so many bells & whistles
+    /// </summary>
     public class CommandHook : ICommand
     {
         Func<object, bool> canExecute;
         Action<object> action;
-
         public event EventHandler CanExecuteChanged;
-        
-        public CommandHook(Action<object> Action) 
-        : this(Action, (_) => true, null) 
+
+        // Constructors
+        public CommandHook(Action<object> Action)
+        : this(Action, (_) => true, null)
         { }
 
         public CommandHook(Action<object> Action, Func<object, bool> CanExecute)
             : this(Action, CanExecute, null)
         { }
 
+        // Action is required. CanExecute defaults to true. Parent is optional
         public CommandHook(Action<object> Action, Func<object, bool> CanExecute, INotifyPropertyChanged Parent)
         {
             this.canExecute = CanExecute;
             this.action = Action;
-            if(Parent!= null)
+            if (Parent != null)
                 Parent.PropertyChanged += Parent_PropertyChanged;
         }
 
-        // Might not want to do this in general *every time* a property on the parent changes
-        private void Parent_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (CanExecuteChanged != null)
-                CanExecuteChanged(this, new EventArgs());
-        }
-
+        /// <summary>
+        /// If CanExecute(p) returns true the UI element attached to it will be enabled
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public bool CanExecute(object parameter)
             => canExecute(parameter);
 
+        /// <summary>
+        /// Execute the command.
+        /// </summary>
+        /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
             action(parameter);
+        }
+
+        /// <summary>
+        /// Call this when the state of a commandable object has changed but has not
+        /// necessarily updated a notifiable property (or if the object does not
+        /// implement INotifyPropertyChanged)
+        /// </summary>
+        public void SuggestCanExecuteChanged()
+           => OnCanExecuteChanged();
+
+        // Ping the WPF runtime to check if the changed parameter should also result in a 
+        // change to the executable status of this command.
+        // Might not want to do this *every time* a property on the parent changes, but
+        // for small use cases (or small containers!) it's probably ok 
+        private void Parent_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            => OnCanExecuteChanged();
+
+        private void OnCanExecuteChanged()
+        {
+            if (CanExecuteChanged != null)
+                CanExecuteChanged(this, new EventArgs());
         }
     }
 }
