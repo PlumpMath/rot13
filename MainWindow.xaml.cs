@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace rot13
+namespace Rot13
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
