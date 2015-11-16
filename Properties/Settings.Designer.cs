@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace rot13.Properties {
+namespace Rot13.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

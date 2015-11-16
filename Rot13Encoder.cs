@@ -3,13 +3,13 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace rot13
+namespace Rot13
 {
     /// <summary>
     /// The ViewModel for rot13.exe. Exposes a Text property which may or may not be encoded and
     /// Encode and PasteRot13 commands for interaction with the UI. 
     /// </summary>
-    public class Rot13Encoder : NotifiableObject
+    public class Rot13Encoder : NotifiableObject, IDisposable
     {
         private ClipboardMonitor clippy;
 
@@ -57,7 +57,7 @@ namespace rot13
             => this.Text = this.Text.Rot13();
         
         // Enable the paste encoded button, if there's anything to paste
-        private bool CanPaste()
+        private static bool CanPaste()
             => Clipboard.ContainsText();
 
         // If there is usable data in the clipboard, encode it and show it
@@ -68,5 +68,36 @@ namespace rot13
                 this.Text = Clipboard.GetText().Rot13();
             }
         }
+
+        #region IDisposable Support
+        private bool isDisposed = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!isDisposed)
+            {
+                if (disposing)
+                {
+                    clippy.Dispose();
+                }
+                isDisposed = true;
+            }
+        }
+
+        ~Rot13Encoder()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            // Implemented to keep code analysis happy
+            Dispose(false);
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

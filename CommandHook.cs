@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace rot13
+namespace Rot13
 {
     /// <summary>
     /// Implements ICommand. Based tosome extent on the Prism DelegateCommand class but without
@@ -15,21 +15,21 @@ namespace rot13
         public event EventHandler CanExecuteChanged;
 
         // Constructors
-        public CommandHook(Action<object> Action)
-        : this(Action, (_) => true, null)
+        public CommandHook(Action<object> action)
+        : this(action, (_) => true, null)
         { }
 
-        public CommandHook(Action<object> Action, Func<object, bool> CanExecute)
-            : this(Action, CanExecute, null)
+        public CommandHook(Action<object> action, Func<object, bool> canExecute)
+            : this(action, canExecute, null)
         { }
 
         // Action is required. CanExecute defaults to true. Parent is optional
-        public CommandHook(Action<object> Action, Func<object, bool> CanExecute, INotifyPropertyChanged Parent)
+        public CommandHook(Action<object> action, Func<object, bool> canExecute, INotifyPropertyChanged parent)
         {
-            this.canExecute = CanExecute;
-            this.action = Action;
-            if (Parent != null)
-                Parent.PropertyChanged += Parent_PropertyChanged;
+            this.canExecute = canExecute;
+            this.action = action;
+            if (parent != null)
+                parent.PropertyChanged += Parent_PropertyChanged;
         }
 
         /// <summary>

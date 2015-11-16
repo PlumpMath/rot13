@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace rot13
+namespace Rot13
 {
     public static class Extensions
     {
         private static Dictionary<char, char> subs;
 
-        static Extensions()
+        static void Init() // Called when the dictionary is needed
         {
             var alpha = "abcdefghijklmnopqrstuvwxyz";
             subs = MakePairs(alpha).ToDictionary(k => k.Key, k=>k.Value);
@@ -27,11 +28,14 @@ namespace rot13
             }
         }
 
-        public static string Rot13(this string s)
+        public static string Rot13(this string value)
         {
-            var sb = new StringBuilder(s.Length);
+            if (value == null) throw new ArgumentNullException(nameof(value));
+            if (subs == null) Init();
+
+            var sb = new StringBuilder(value.Length);
             sb.Append(
-                s.ToCharArray().Select(c =>
+                value.ToCharArray().Select(c =>
                 {
                     char c1;
                     return subs.TryGetValue(c, out c1) ? c1 : c;

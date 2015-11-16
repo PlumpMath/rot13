@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
-namespace rot13
+namespace Rot13
 {
     public class ClipboardMonitor : IDisposable
     {
         private HwndSource source; // wrapper for a Win32 window/HWnd
+
+        // THe Extended Correctness rule set will complain about this not being a safehandle.
         private IntPtr nextViewer; // next registered clipboard viewer (some other process probably)
 
         // simplest possible flag to signal containing code to do something with the clipboard
@@ -18,7 +21,7 @@ namespace rot13
         {
             // Create a new window. Name is required, otherwise the window not only won't
             // be shown but it won't be removed when the main window is closed, resulting
-            // in a zombie process
+            // in a zombie process!
             source = new HwndSource(
                 new HwndSourceParameters("_")
                 {
@@ -98,6 +101,12 @@ namespace rot13
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~ClipboardMonitor()
+        {
+            Dispose(false);
         }
         #endregion
     }
