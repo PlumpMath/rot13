@@ -11,6 +11,7 @@ namespace Rot13
     /// </summary>
     public class Rot13Encoder : NotifiableObject, IDisposable
     {
+        // Watches 
         private ClipboardMonitor clippy;
 
         public ICommand Encode { get; }
@@ -25,7 +26,7 @@ namespace Rot13
             set
             {
                 text = value;
-                OnPropertyChanged(nameof(Text));
+                OnPropertyChanged();
             }
         }
 
