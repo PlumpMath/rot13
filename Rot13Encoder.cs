@@ -44,6 +44,10 @@ namespace Rot13
             PasteAndEncode(); 
         }
 
+        // Do it - all of this extra code to call a single extension method. Tragic. 
+        private void DoEncode()
+            => this.Text = this.Text.Rot13();
+
         // When the clipboard has new data, update the command status
         private void ClipboardHasData(object sender, EventArgs e)
             => (PasteRot13 as CommandHook).SuggestCanExecuteChanged();
@@ -51,10 +55,6 @@ namespace Rot13
         // Is there anything to encode?
         private bool CanEncode()
             => !string.IsNullOrWhiteSpace(Text);
-
-        // Do it - all of this extra code to call a single extention method. Tragic. 
-        private void DoEncode()
-            => this.Text = this.Text.Rot13();
         
         // Enable the paste encoded button, if there's anything to paste
         private static bool CanPaste()

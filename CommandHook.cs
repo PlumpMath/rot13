@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace Rot13
 {
     /// <summary>
-    /// Implements ICommand. Based tosome extent on the Prism DelegateCommand class but without
+    /// Implements ICommand. Based to some extent on the Prism DelegateCommand class but without
     /// quite so many bells & whistles
     /// </summary>
     public class CommandHook : ICommand
@@ -16,7 +16,7 @@ namespace Rot13
 
         // Constructors
         public CommandHook(Action<object> action)
-        : this(action, (_) => true, null)
+            : this(action, (_) => true, null)
         { }
 
         public CommandHook(Action<object> action, Func<object, bool> canExecute)
@@ -45,10 +45,8 @@ namespace Rot13
         /// </summary>
         /// <param name="parameter"></param>
         public void Execute(object parameter)
-        {
-            action(parameter);
-        }
-
+            => action(parameter);
+            
         /// <summary>
         /// Call this when the state of a commandable object has changed but has not
         /// necessarily updated a notifiable property (or if the object does not
