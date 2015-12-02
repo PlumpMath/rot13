@@ -21,14 +21,11 @@ namespace Rot13
 
             var sb = new StringBuilder(value.Length);
             sb.Append(
-                value.ToCharArray().Select(c =>
-                {
-                    char c1;
-                    return substitutions.TryGetValue(c, out c1) ? c1 : c;
-                })
-                .ToArray() // would be nicer to have Stringbuilder.Append(IEnumerable<char>)
-                           // as an extension method but Append(object) already exists so 
-                           // extension methods are never called :-(
+                value.ToCharArray()
+                     .Select(c => substitutions.ValueOrDefault(c, c))
+                     .ToArray() // would be nicer to have Stringbuilder.Append(IEnumerable<char>)
+                                // as an extension method but Append(object) already exists, so 
+                                // extension methods are never called :-(
             );
             return sb.ToString();
         }
@@ -58,11 +55,24 @@ namespace Rot13
 
             // validate input
             if (length % 2 != 0) throw new ArgumentException("String must have even number of characters");
-            if (chars.Distinct().Count() != length) throw new ArgumentException("Characters in string must be unique");
+            if (chars.Distinct().Count() != length) 
+                throw new ArgumentException("Characters in string must be unique");
 
-            var shift = length / 2;
+            // Function to calculate rot13'ed index for a given starting index
+            Func<int, int> fn = (int i) => (length / 2 + i) % length;
+
             // i is a counter which is incremented for each item in the sequence
-            return chars.Select((c, i) => new KeyValuePair<char, char>(c, chars[(shift + i) % length]));
+            return chars.Select((c, i)
+                => new KeyValuePair<char, char>(c, chars[fn(i)])
+                );
+        }
+
+        private static TValue ValueOrDefault<TKey, TValue>(
+            this IDictionary<TKey, TValue> dict, TKey key, TValue defaultValue
+        )
+        {
+            TValue V;
+            return dict.TryGetValue(key, out V) ? V : defaultValue;
         }
     }
 }

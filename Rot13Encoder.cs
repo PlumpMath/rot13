@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,14 +10,14 @@ namespace Rot13
     /// </summary>
     public class Rot13Encoder : NotifiableObject, IDisposable
     {
-        // Watches 
-        private ClipboardMonitor clippy;
-
+        // Adapter between view and viewmodel for the Encode button
         public ICommand Encode { get; }
 
+        // Adapter between view and viewmodel for the PasteRot13 button
         public ICommand PasteRot13 { get; }
 
-        // too much boilerplate!!
+        // too much boilerplate!! The Text property, which is as close as this gets
+        // to the model in the MVVM pattern
         private string text;
         public string Text
         {
@@ -29,6 +28,9 @@ namespace Rot13
                 OnPropertyChanged();
             }
         }
+
+        // Watches for clipboard changes
+        private ClipboardMonitor clippy;
 
         // Constructor
         public Rot13Encoder()
@@ -45,21 +47,19 @@ namespace Rot13
             PasteAndEncode(); 
         }
 
-        // Do it - all of this extra code to call a single extension method. Tragic. 
+        // *************************************************************************
+        // Do it - all of this code to call a single extension method. Tragic.
+        // *************************************************************************
         private void DoEncode()
             => this.Text = this.Text.Rot13();
-
-        // When the clipboard has new data, update the command status
-        private void ClipboardHasData(object sender, EventArgs e)
-            => (PasteRot13 as CommandHook).SuggestCanExecuteChanged();
 
         // Is there anything to encode?
         private bool CanEncode()
             => !string.IsNullOrWhiteSpace(Text);
-        
-        // Enable the paste encoded button, if there's anything to paste
-        private static bool CanPaste()
-            => Clipboard.ContainsText();
+
+        // When the clipboard has new data, update the command status
+        private void ClipboardHasData(object sender, EventArgs e)
+            => (PasteRot13 as CommandHook).SuggestCanExecuteChanged();
 
         // If there is usable data in the clipboard, encode it and show it
         private void PasteAndEncode()
@@ -69,6 +69,10 @@ namespace Rot13
                 this.Text = Clipboard.GetText().Rot13();
             }
         }
+
+        // Enable the paste encoded button, if there's anything to paste
+        private static bool CanPaste()
+            => Clipboard.ContainsText();
 
         #region IDisposable Support
         private bool isDisposed = false; // To detect redundant calls
