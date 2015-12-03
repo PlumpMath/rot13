@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
@@ -10,6 +11,9 @@ namespace Rot13
         private HwndSource source; // wrapper for a Win32 window/HWnd
 
         // THe Extended Correctness rule set will complain about this not being a safehandle.
+        [SuppressMessage(
+            "Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources",
+            Justification= "Causes excessive complexity")]
         private IntPtr nextViewer; // next registered clipboard viewer (some other process probably)
 
         // simplest possible flag to signal containing code to do something with the clipboard
