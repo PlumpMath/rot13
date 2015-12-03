@@ -14,12 +14,16 @@
             <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="rot13String" TextWrapping="Wrap" 
+        <TextBox x:Name="rot13String"
                  Text="{Binding Path=Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
-                 Grid.Row="0" Margin="10,10,10,0" />
+                 Grid.Row="0" Margin="10,10,10,0" 
+                 TextWrapping="Wrap" AcceptsReturn="True" 
+                 ScrollViewer.CanContentScroll="True" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" />
         <StackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Center">
         <Button Content="Encode" Width="75" Command="{Binding Path=Encode}" Margin="10"/>
-        <Button Content="PasteRot13"  Width="75" Command="{Binding PasteRot13}" Margin="10"/>
+        <Button Content="Paste Rot13"  Width="75" Command="{Binding PasteRot13}" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>
