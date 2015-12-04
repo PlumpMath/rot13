@@ -62,6 +62,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ClipboardMonitor.cs" />
+    <Compile Include="ClipboardMonitorBase.cs" />
+    <Compile Include="ClipboardMonitorFactory.cs" />
+    <Compile Include="LegacyClipboardMonitor.cs" />
+    <Compile Include="IClipboardMonitor.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="NotifiableObject.cs" />
     <Compile Include="Rot13Encoder.cs" />

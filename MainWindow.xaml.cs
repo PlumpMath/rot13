@@ -10,6 +10,8 @@ namespace Rot13
         public MainWindow()
         {
             InitializeComponent();
+
+            var v = System.Environment.OSVersion.Version;
         }
     }
 }

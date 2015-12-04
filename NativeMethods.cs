@@ -12,6 +12,27 @@ namespace Rot13
     /// </summary>
     internal static class NativeMethods
     {
+        /* Constants */
+
+        // defined in winuser.h
+        internal const int WM_DRAWCLIPBOARD = 0x0308;
+        internal const int WM_CHANGECBCHAIN = 0x030D;
+        internal const int WM_CLIPBOARDUPDATE = 0x031D;
+
+
+        /* Win32 clipboard API */
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool AddClipboardFormatListener(IntPtr hWndListener);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool RemoveClipboardFormatListener(IntPtr hWndListener);
+
+
+        /* Legacy (<= XP) Win32 clipboard functionality */
+
         /// <summary>
         /// Register with the clipboard viewer chain.
         /// </summary>
@@ -41,9 +62,5 @@ namespace Rot13
         /// <returns></returns>
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern IntPtr SendMessage(IntPtr hwnd, int wMsg, IntPtr wParam, IntPtr lParam);
-
-        // defined in winuser.h
-        internal const int WM_DRAWCLIPBOARD = 0x0308;
-        internal const int WM_CHANGECBCHAIN = 0x030D;
     }
 }

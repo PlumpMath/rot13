@@ -30,13 +30,13 @@ namespace Rot13
         }
 
         // Watches for clipboard changes
-        private ClipboardMonitor clippy;
+        private IClipboardMonitor clippy;
 
         // Constructor
         public Rot13Encoder()
         {
             // Initialize clipboard monitoring
-            clippy = new ClipboardMonitor();
+            clippy = ClipboardMonitorFactory.Create();
             clippy.ClipboardHasData += ClipboardHasData;
             
             // Initialize commands
