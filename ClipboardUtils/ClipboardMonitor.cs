@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Rot13
+namespace Rot13.ClipboardUtils
 {
     /// <summary>
     /// Clipboard Monitoring class - uses newer and simpler APIs than the legacy version,

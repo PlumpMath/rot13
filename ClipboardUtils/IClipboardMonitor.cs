@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rot13
+namespace Rot13.ClipboardUtils
 {
     public interface IClipboardMonitor : IDisposable
     {

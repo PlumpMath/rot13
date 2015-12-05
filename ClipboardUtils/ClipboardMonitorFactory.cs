@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rot13
+namespace Rot13.ClipboardUtils
 {
     /// <summary>
     /// Get a valid flavor of monitor from here

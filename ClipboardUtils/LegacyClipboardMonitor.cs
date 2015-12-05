@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Rot13
+namespace Rot13.ClipboardUtils
 {
     /// <summary>
     /// Clipboard monitor for windows 2000/xp

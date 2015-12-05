@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rot13
+namespace Rot13.ClipboardUtils
 {
     /// <summary>
     /// Interop with Win32 Clipboard APIs
@@ -22,10 +22,20 @@ namespace Rot13
 
         /* Win32 clipboard API */
 
+        /// <summary>
+        /// Register for clipboard notifications
+        /// </summary>
+        /// <param name="hWndListener"></param>
+        /// <returns></returns>
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool AddClipboardFormatListener(IntPtr hWndListener);
 
+        /// <summary>
+        /// Remove clipboard listener registration
+        /// </summary>
+        /// <param name="hWndListener"></param>
+        /// <returns></returns>
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool RemoveClipboardFormatListener(IntPtr hWndListener);

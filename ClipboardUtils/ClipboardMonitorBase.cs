@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Interop;
 
-namespace Rot13
+namespace Rot13.ClipboardUtils
 {
     public abstract class ClipboardMonitorBase : IClipboardMonitor
     {

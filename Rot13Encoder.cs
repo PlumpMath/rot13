@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rot13.ClipboardUtils;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,10 +12,10 @@ namespace Rot13
     public class Rot13Encoder : NotifiableObject, IDisposable
     {
         // Adapter between view and viewmodel for the Encode button
-        public ICommand Encode { get; }
+        public ICommand Encode => new CommandHook(_ => DoEncode(), _ => CanEncode(), this);
 
         // Adapter between view and viewmodel for the PasteRot13 button
-        public ICommand PasteRot13 { get; }
+        public ICommand PasteRot13 => new CommandHook(_ => PasteAndEncode(), _ => CanPaste());
 
         // too much boilerplate!! The Text property, which is as close as this gets
         // to the model in the MVVM pattern
@@ -39,17 +40,13 @@ namespace Rot13
             clippy = ClipboardMonitorFactory.Create();
             clippy.ClipboardHasData += ClipboardHasData;
             
-            // Initialize commands
-            Encode = new CommandHook(_ => DoEncode(), _ => CanEncode(), this);
-            PasteRot13 = new CommandHook(_ => PasteAndEncode(), _ => CanPaste());
-            
             // start up by en/decoding the clipboard.
             PasteAndEncode(); 
         }
 
-        // *************************************************************************
+        // *******************************************************************
         // Do it - all of this code to call a single extension method. Tragic.
-        // *************************************************************************
+        // *******************************************************************
         private void DoEncode()
             => this.Text = this.Text.Rot13();
 

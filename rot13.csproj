@@ -61,12 +61,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClipboardMonitor.cs" />
-    <Compile Include="ClipboardMonitorBase.cs" />
-    <Compile Include="ClipboardMonitorFactory.cs" />
-    <Compile Include="LegacyClipboardMonitor.cs" />
-    <Compile Include="IClipboardMonitor.cs" />
-    <Compile Include="NativeMethods.cs" />
+    <Compile Include="ClipboardUtils\ClipboardMonitor.cs" />
+    <Compile Include="ClipboardUtils\ClipboardMonitorBase.cs" />
+    <Compile Include="ClipboardUtils\ClipboardMonitorFactory.cs" />
+    <Compile Include="ClipboardUtils\LegacyClipboardMonitor.cs" />
+    <Compile Include="ClipboardUtils\IClipboardMonitor.cs" />
+    <Compile Include="ClipboardUtils\NativeMethods.cs" />
     <Compile Include="NotifiableObject.cs" />
     <Compile Include="Rot13Encoder.cs" />
     <Page Include="MainWindow.xaml">
