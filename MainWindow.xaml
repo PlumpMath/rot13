@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rot13"
         mc:Ignorable="d"
-        Title="ROT13" Height="180" Width="247">
+        Title="ROT13" Height="180" Width="320">
     <Window.Resources>
         <local:Rot13Encoder x:Key="r13"/>
     </Window.Resources>
@@ -22,8 +22,9 @@
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" />
         <StackPanel Grid.Row="1" Orientation="Horizontal"  HorizontalAlignment="Center">
-        <Button Content="Encode" Width="75" Command="{Binding Path=Encode}" Margin="10"/>
-        <Button Content="Paste Rot13"  Width="75" Command="{Binding PasteRot13}" Margin="10"/>
+            <Button Content="Encode" Width="75" Command="{Binding Path=Encode}" Margin="10"/>
+            <Button Content="Copy Rot13" Width="75" Command="{Binding CopyRot13}" Margin="10"/>
+            <Button Content="Paste Rot13"  Width="75" Command="{Binding PasteRot13}" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>

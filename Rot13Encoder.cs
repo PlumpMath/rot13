@@ -17,6 +17,9 @@ namespace Rot13
         // Adapter between view and viewmodel for the PasteRot13 button
         public ICommand PasteRot13 => new CommandHook(_ => PasteAndEncode(), _ => CanPaste());
 
+        // Adapter between view and viewmodel for the CopyRot13 button
+        public ICommand CopyRot13 => new CommandHook(_ => EncodeAndCopy(), _ => CanEncode(), this);
+
         // too much boilerplate!! The Text property, which is as close as this gets
         // to the model in the MVVM pattern
         private string text;
@@ -71,6 +74,10 @@ namespace Rot13
         private static bool CanPaste()
             => Clipboard.ContainsText();
 
+        // Encode the text right into the clipboard
+        private void EncodeAndCopy()
+            => Clipboard.SetText(this.Text.Rot13());
+        
         #region IDisposable Support
         private bool isDisposed = false; // To detect redundant calls
 
